@@ -30,16 +30,16 @@ gcc -o main main.c dataHorario.c dataHorario.h
 ```
 
 ## 📖 Como Usar
-- **Criar e exibir horário exato:** `horarioExato(Horario *hor, int fuso);`
-- **Criar e exibir data exata:** `dataExata(Data *dat, int fuso);`
-- **Alterar horário manualmente:** `alteraHorario(Horario *hr, int horas, int minutos, int segundos);`
-- **Alterar data manualmente:** `alteraData(Data *dta, int dia, int mes, int ano);`
-- **Calcular diferença entre datas:** `diferencaDatas(Data *data1, Data *data2);`
+- **Criar e exibir horário exato:** `horarioExato(Horario* hor, int fuso);`
+- **Criar e exibir data exata:** `dataExata(Data* dat, int fuso);`
+- **Alterar horário manualmente:** `alteraHorario(Horario* hr, int horas, int minutos, int segundos);`
+- **Alterar data manualmente:** `alteraData(Data* dta, int dia, int mes, int ano);`
+- **Calcular diferença entre datas:** `diferencaDatas(Data* data1, Data* data2);`
 
 ## 📊 Exemplo de Uso
 ```c
-Horario *horario = criaHorario();
-Data *data = criaData();
+Horario* horario = criaHorario();
+Data* data = criaData();
 imprimeDataHorarioExatos(data, horario, -3);
 ```
 
