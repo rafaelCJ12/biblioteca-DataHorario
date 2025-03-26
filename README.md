@@ -19,14 +19,14 @@ Este projeto implementa um **gerenciador de data e horário** em **C**, permitin
   - `unistd.h` (para funções de atraso e pausa)
 
 ## 🚀 Como Executar o Programa
-### 1️⃣ Compilar o código
+### 1️⃣ Compilar o código (exemplo)
 ```bash
-gcc -o dataHorario dataHorario.c -Wall
+gcc -o main main.c dataHorario.c dataHorario.h
 ```
 
-### 2️⃣ Executar o programa
+### 2️⃣ Executar o programa (exemplo)
 ```bash
-./dataHorario
+./main
 ```
 
 ## 📖 Como Usar
