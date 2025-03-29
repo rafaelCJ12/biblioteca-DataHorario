@@ -154,14 +154,7 @@ Data* criaData() {
     horas = (segundos % 86400) / 3600;
     
     while(dias > quantidadeDiasAno(ano)) {
-        if(ehBissexto(ano)) {
-            dias -= 366;
-        }
-        
-        else {
-            dias -= 365;
-            
-        }
+        dias -= quantidadeDiasAno(ano);
         ano++;
     }
     
@@ -226,14 +219,7 @@ void dataExata(Data* dat, int fuso) {
     horas = (segundos % 86400) / 3600;
     
     while(dias > quantidadeDiasAno(ano)) {
-        if(ehBissexto(ano)) {
-            dias -= 366;
-        }
-        
-        else {
-            dias -= 365;
-            
-        }
+        dias -= quantidadeDiasAno(ano);
         ano++;
     }
     
@@ -346,83 +332,106 @@ void relogioCalendario(Data* dat, Horario* hor, int fuso) {
     }
 }
 
+int comparaDatas(Data* data1, Data* data2) {
+
+    if(data1 == NULL || data2 == NULL) {
+        return -2;
+    }
+
+    if(data1 -> ano - data2 -> ano < 0) {
+        return -1;
+    }
+
+    if(data1 -> dia == data2 -> dia && data1 -> mes == data2 -> mes && data1 -> ano == data2 -> ano) {
+        return 0;
+    }
+
+    return 1;
+
+}
+
 /*calcula a diferenca de tempo entre duas datas*/
 void diferencaDatas(Data* data1, Data* data2) {
     int ano = 0;
-    int dias = 0;
     int mes = 0;
-    long int segundos = 0;
-    long int segundos2 = 0;
     int i = 0;
+    int j = 0;
+    int mesInicial = 0;
+    long int dias = 0;
 
-    if(data1 == NULL || data2 == NULL) {
+    if(comparaDatas(data1, data2) == -2) {
         printf("\nERRO: variavel de Data nao inicializada.\n");
         return;
     }
 
-    segundos = data1 -> dia * 86400;
-    segundos2 = data2 -> dia * 86400;
-
-    for(i = 1; i < data1 -> mes; i++) {
-        if((i == 2) && (ehBissexto(data1 -> ano))) {
-            segundos += 29 * 86400;
-        }
-
-        else{
-            segundos += quantidadeDiasMes(i) * 86400;
-        }
-    }
-
-    for(i = 1; i < data2 -> mes; i++) {
-        if((i == 2) && (ehBissexto(data2 -> ano))) {
-            segundos2 += 29 * 86400;
-
-        }
-
-        else{
-            segundos2 += quantidadeDiasMes(i) * 86400;
-        }
-    }
-
-    for(i = 1; i < data1 -> ano; i++) {
-        segundos += quantidadeDiasAno(i) * 86400;
-    }
-
-    for(i = 1; i < data2 -> ano; i++) {
-        segundos2 += quantidadeDiasAno(i) * 86400;
-    }
-
-    segundos -= segundos2;
-
-    if(segundos == 0) {
-        printf("\nAs datas sao iguas.\n");
+    if(comparaDatas(data1, data2) == -1) {
+        printf("\nA segunda data acontece depois que a primeira.\n");
         return;
     }
 
-    if(segundos < 0) {
-        printf("\nA segunda data acontece depois da primeira.\n");
+    if(comparaDatas(data1, data2) == 0) {
+        printf("\nAs datas sao iguais.\n");
         return;
     }
 
-    dias = segundos / 86400;
+    j = data1 -> ano;
+
+    for(i = 1; i <= data1 -> mes; i++) {
+        if(ehBissexto(j) && (i == 2)) {
+            dias += 29;
+        }
+        else{
+            dias += quantidadeDiasMes(i);
+        }
+    }
+
+    j = data2 -> ano;
+
+    for(i = 1; i <= data2 -> mes; i++) {
+        if(ehBissexto(j) && (i == 2)) {
+            dias -= 29;
+        }
+        else{
+            dias -= quantidadeDiasMes(i);
+        }
+    }
 
     for(i = data2 -> ano; i < data1 -> ano; i++) {
-        dias -= quantidadeDiasAno(i);
-        ano++;
+        dias += quantidadeDiasAno(i);
     }
 
-    for(i = data2 -> mes; i < data1 -> mes; i++) {
-        if((data2 -> ano == 2) && (ehBissexto(data2 -> ano))) {
+    dias += data1 -> dia - data2 -> dia;
+
+    printf("\nA diferenca entre as duas datas eh de %i dia(s).\n", dias);
+
+    i = data2 -> mes;
+    j = data2 -> ano;
+    mesInicial = data2 -> mes;
+    mes = 0;
+
+    while(dias >= quantidadeDiasMes(i)) {
+        if(ehBissexto(j) && (i == 2)) {
             dias -= 29;
         }
 
         else{
             dias -= quantidadeDiasMes(i);
         }
+        
         mes++;
+        i = (i % 12) + 1;
+
+        if(i == mesInicial) {
+            ano++;
+            mes = 0;
+        }
+
+        if(i == 1) {
+            j++;
+        }
     }
 
-    printf("\nQuantidade de tempo decorrido entre as duas datas em segundos: %li\n", segundos);
+
     printf("\nA diferenca entre as datas eh de %i ano(s), %i mes(es) e %i dia(s).\n", ano, mes, dias);
 
 }
