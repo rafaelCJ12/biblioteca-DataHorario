@@ -30,7 +30,7 @@ gcc -o main main.c dataHorario.c dataHorario.h
 ```
 
 ## 📖 Como Usar
-- **Criar e exibir horário exato:** `horarioExato(Horario* hor, int fuso);`
+- **Altera a estrutura para o horário exato:** `horarioExato(Horario* hor, int fuso);`
 - **Criar e exibir data exata:** `dataExata(Data* dat, int fuso);`
 - **Alterar horário manualmente:** `alteraHorario(Horario* hr, int horas, int minutos, int segundos);`
 - **Alterar data manualmente:** `alteraData(Data* dta, int dia, int mes, int ano);`
