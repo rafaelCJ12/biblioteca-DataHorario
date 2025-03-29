@@ -30,7 +30,7 @@ gcc -o main main.c dataHorario.c dataHorario.h
 ```
 
 ## 📖 Como Usar
-- **Cria horário (criando uma estrutura com horario exato em UTC+0):** `criaHorario();`
+- **Cria horário (criando uma estrutura com horário exato em UTC+0):** `criaHorario();`
 - **Cria data (criando uma estrutura com data exata em UTC+0):** `criaData();`
 - **Altera a estrutura para o horário exato:** `horarioExato(Horario* hor, int fuso);`
 - **Altera a estrutura para a data exata:** `dataExata(Data* dat, int fuso);`
