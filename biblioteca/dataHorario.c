@@ -332,46 +332,14 @@ void relogioCalendario(Data* dat, Horario* hor, int fuso) {
     }
 }
 
-int comparaDatas(Data* data1, Data* data2) {
-
-    if(data1 == NULL || data2 == NULL) {
-        return -2;
-    }
-
-    if(data1 -> ano - data2 -> ano < 0) {
-        return -1;
-    }
-
-    if(data1 -> dia == data2 -> dia && data1 -> mes == data2 -> mes && data1 -> ano == data2 -> ano) {
-        return 0;
-    }
-
-    return 1;
-
-}
-
-/*calcula a diferenca de tempo entre duas datas*/
-void diferencaDatas(Data* data1, Data* data2) {
-    int ano = 0;
-    int mes = 0;
+long int diferencaDeDiasEntreDatas(Data* data1, Data* data2) {
     int i = 0;
     int j = 0;
-    int mesInicial = 0;
-    long int dias = 0;
+    int dias = 0;
 
-    if(comparaDatas(data1, data2) == -2) {
+    if(data1 == NULL || data2 == NULL) {
         printf("\nERRO: variavel de Data nao inicializada.\n");
-        return;
-    }
-
-    if(comparaDatas(data1, data2) == -1) {
-        printf("\nA segunda data acontece depois que a primeira.\n");
-        return;
-    }
-
-    if(comparaDatas(data1, data2) == 0) {
-        printf("\nAs datas sao iguais.\n");
-        return;
+        return -1;
     }
 
     j = data1 -> ano;
@@ -402,6 +370,43 @@ void diferencaDatas(Data* data1, Data* data2) {
 
     dias += data1 -> dia - data2 -> dia;
 
+    if(dias < 0) {
+        return -2;
+    }
+
+    return dias;
+
+}
+
+
+/*calcula a diferenca de tempo entre duas datas em anos, meses e dias*/
+void diferencaDatas(Data* data1, Data* data2) {
+    int ano = 0;
+    int mes = 0;
+    int i = 0;
+    int j = 0;
+    int mesInicial = 0;
+    long int dias = diferencaDeDiasEntreDatas(data1, data2);
+
+    /*testa se as datas sao iguais*/
+    if(dias == 0) {
+        printf("\nAs datas sao iguais.\n");
+        return;
+    }
+
+    /*testa se a segunda data acontece depois que a primeira*/
+    if(dias == -2) {
+        printf("\nA segunda data acontece depois que a primeira.\n");
+        return;
+    }
+
+    /*testa se uma datas aponta para null*/
+    if(dias == -1) {
+        printf("\nERRO: variavel de data nao inicializada.\n");
+        return;
+    }
+
+
     printf("\nA diferenca entre as duas datas eh de %i dia(s).\n", dias);
 
     i = data2 -> mes;
@@ -430,7 +435,6 @@ void diferencaDatas(Data* data1, Data* data2) {
             j++;
         }
     }
-
 
     printf("\nA diferenca entre as datas eh de %i ano(s), %i mes(es) e %i dia(s).\n", ano, mes, dias);
 
