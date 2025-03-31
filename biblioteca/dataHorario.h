@@ -30,7 +30,7 @@ void imprimeDataHorarioExatos(Data *dat, Horario* hor, int fuso);
 
 void relogioCalendario(Data* dat, Horario* hor, int fuso);
 
-int comparaDatas(Data* data1, Data* data2);
+long int diferencaDeDiasEntreDatas(Data* data1, Data* data2);
 
 void diferencaDatas(Data* data1, Data* data2);
 
